@@ -18,4 +18,26 @@ public class P7_LC33_SearchInRotatedSorted {
 
         return targetIndex;
     }
+
+    public static int search(int[] nums, int target) {
+        int n = nums.length;
+        int startIndex = 0;
+        int endIndex = n-1;
+
+        while(startIndex <= endIndex){
+            int midIndex = startIndex + (endIndex - startIndex)/2;
+            if(nums[midIndex] == target)    return midIndex;
+
+            //check the sorted portion - right portion sorted or else left portion is sorted
+            if(nums[midIndex] <= nums[endIndex]){
+                //check the target lies in sorted portion or nott
+                if(nums[midIndex] <= target && target <= nums[endIndex]) startIndex = midIndex + 1;
+                else endIndex = midIndex - 1;
+            }else{
+                if(nums[startIndex] <= target && target <= nums[midIndex])  endIndex = midIndex - 1;
+                else startIndex = midIndex + 1;
+            }
+        }
+        return -1;
+    }
 }
